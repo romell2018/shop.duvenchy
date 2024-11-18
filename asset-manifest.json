@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/[shop.duvenchyshop]/static/css/main.eba6b4e3.css",
+    "main.js": "/[shop.duvenchyshop]/static/js/main.7d854f52.js",
+    "static/media/0.png": "/[shop.duvenchyshop]/static/media/0.22ddcd272cbc5b032de0.png",
+    "index.html": "/[shop.duvenchyshop]/index.html",
+    "main.eba6b4e3.css.map": "/[shop.duvenchyshop]/static/css/main.eba6b4e3.css.map",
+    "main.7d854f52.js.map": "/[shop.duvenchyshop]/static/js/main.7d854f52.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eba6b4e3.css",
+    "static/js/main.7d854f52.js"
+  ]
+}

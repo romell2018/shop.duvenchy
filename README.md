@@ -13,7 +13,6 @@ Front-End (React & TailwindCSS)
 	•	Product Details: Each item has a dedicated page that shows stock availability, size options, and an “Add to Cart” button.
 	•	Cart Functionality: A cart component displaying the number of items, subtotal, a “View Cart” button, and a “Checkout” button. Users can add, view, or remove items from the cart.
 	•	Mobile Navigation: A responsive navbar with the logo on the right and a cart icon on the left.
-	•	Admin Menu: Accessible via a hamburger menu, enabling administrators to log in and manage store inventory.
 	•	Checkout Process: Secure checkout options with payment integration.
 
 Back-End (Go)

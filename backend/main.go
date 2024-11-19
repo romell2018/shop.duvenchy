@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -168,21 +169,28 @@ func main() {
 	r.HandleFunc("/create-payment-intent", createPaymentIntent).Methods("POST")
 	r.HandleFunc("/process-checkout", processCheckout).Methods("POST")
 
-	// Serve static files for clothing images
+	// Serve static files for React and clothing images
+	staticDir := "./build"
 	r.PathPrefix("/clothing/").Handler(http.StripPrefix("/clothing/", http.FileServer(http.Dir("./clothing"))))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir(staticDir)))
 
-	// Enable CORS for frontend communication
+	// Catch-all handler for React routes
+	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, filepath.Join(staticDir, "index.html"))
+	})
+
+	// Enable CORS
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://shop-duvenchy.onrender.com"}, // Update with your production frontend URL
+		AllowedOrigins:   []string{"https://shop-duvenchy.onrender.com"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 	})
 
-	// Start server
+	// Start the server
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // Default to 8080 if no PORT is specified
+		port = "8080"
 	}
 	log.Printf("Server running at :%s", port)
 	http.ListenAndServe(":"+port, c.Handler(r))

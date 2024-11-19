@@ -52,7 +52,7 @@ const Checkout = ({ cartItems, totalAmount }) => {
         }
         //(`${apiBaseUrl}/create-payment-intent`,
         // Create a payment intent with your server
-        const response = await fetch(`https://shop-duvenchy.onrender.com//create-payment-intent`, { // Change this to your backend URL
+        const response = await fetch(`https://shop-duvenchy.onrender.com/create-payment-intent`, { // Change this to your backend URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

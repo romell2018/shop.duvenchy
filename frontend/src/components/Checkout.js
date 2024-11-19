@@ -3,6 +3,9 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import './Checkout.css'; // Ensure you have CSS for styling
 
 const Checkout = ({ cartItems, totalAmount }) => {
+
+    const apiBaseUrl = process.env.REACT_APP_BACKEND_URL;
+
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);  // Corrected this line
@@ -49,7 +52,7 @@ const Checkout = ({ cartItems, totalAmount }) => {
         }
 
         // Create a payment intent with your server
-        const response = await fetch('http://localhost:8080/create-payment-intent', { // Change this to your backend URL
+        const response = await fetch(`${apiBaseUrl}/create-payment-intent`, { // Change this to your backend URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

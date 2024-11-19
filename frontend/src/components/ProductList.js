@@ -3,10 +3,11 @@ import Product from '../components/Product';
 
 const ProductList = ({ addToCart }) => {
     const [products, setProducts] = useState([]);
+    const apiBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch('http://localhost:8080/products'); // Call Go server
+            const response = await fetch(`${apiBaseUrl}/products`); // Call Go server
             const data = await response.json();
             setProducts(data); // Set products state
         };

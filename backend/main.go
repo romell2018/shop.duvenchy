@@ -55,19 +55,17 @@ var products = []Product{
 		Description: "This is a stylish shirt made from high-quality fabric, perfect for casual outings.",
 		Price:       9.98,
 		Images: map[string]string{
-			"black": "http://localhost:8080/clothing/shirts/black-shirt.png",
-			"white": "http://localhost:8080/clothing/shirts/white-shirt.png",
-			"pink":  "http://localhost:8080/clothing/shirts/pink-shirt.png",
+			"black": "https://shop-duvenchy.onrender.com/clothing/shirts/black-shirt.png",
+			"white": "https://shop-duvenchy.onrender.com/clothing/shirts/white-shirt.png",
+			"pink":  "https://shop-duvenchy.onrender.com/clothing/shirts/pink-shirt.png",
 		},
 		Sizes:  []string{"S", "M", "L", "XL"},
 		Colors: []string{"black", "white", "pink"},
 		Variations: []Variation{
-			{Color: "black", Size: "S", Stock: 1},
-			{Color: "white", Size: "M", Stock: 3},
-			{Color: "pink", Size: "L", Stock: 5},
-			{Color: "pink", Size: "S", Stock: 2},
-			{Color: "pink", Size: "M", Stock: 4},
-			{Color: "black", Size: "L", Stock: 0},
+			{Color: "black", Size: "S", Stock: 10},
+			{Color: "black", Size: "M", Stock: 5},
+			{Color: "white", Size: "L", Stock: 8},
+			{Color: "pink", Size: "XL", Stock: 3},
 		},
 	},
 	{
@@ -75,17 +73,17 @@ var products = []Product{
 		Description: "Our comfortable hoodie keeps you warm during the colder months, while also looking great.",
 		Price:       99.00,
 		Images: map[string]string{
-			"white": "http://localhost:8080/clothing/hoodies/white-hoodie.png",
-			"black": "http://localhost:8080/clothing/hoodies/black-hoodie.png",
-			"blue":  "http://localhost:8080/clothing/hoodies/blue-hoodie.png",
+			"white": "https://shop-duvenchy.onrender.com/clothing/hoodies/white-hoodie.png",
+			"black": "https://shop-duvenchy.onrender.com/clothing/hoodies/black-hoodie.png",
+			"blue":  "https://shop-duvenchy.onrender.com/clothing/hoodies/blue-hoodie.png",
 		},
 		Sizes:  []string{"S", "M", "L", "XL"},
 		Colors: []string{"white", "black", "blue"},
 		Variations: []Variation{
-			{Color: "blue", Size: "S", Stock: 1},
-			{Color: "blue", Size: "M", Stock: 0},
-			{Color: "blue", Size: "L", Stock: 4},
-			{Color: "white", Size: "XL", Stock: 5},
+			{Color: "white", Size: "S", Stock: 15},
+			{Color: "white", Size: "M", Stock: 10},
+			{Color: "black", Size: "L", Stock: 7},
+			{Color: "blue", Size: "XL", Stock: 4},
 		},
 	},
 }
@@ -164,20 +162,28 @@ func init() {
 
 func main() {
 	r := mux.NewRouter()
+
+	// API Endpoints
 	r.HandleFunc("/products", getProducts).Methods("GET")
 	r.HandleFunc("/create-payment-intent", createPaymentIntent).Methods("POST")
-	r.HandleFunc("/process-checkout", processCheckout).Methods("POST") // Added endpoint for checkout
-
-	// Enable CORS for all origins (or specify allowed origins)
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
-		AllowCredentials: true,
-	})
+	r.HandleFunc("/process-checkout", processCheckout).Methods("POST")
 
 	// Serve static files for clothing images
 	r.PathPrefix("/clothing/").Handler(http.StripPrefix("/clothing/", http.FileServer(http.Dir("./clothing"))))
 
+	// Enable CORS for frontend communication
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"https://shop-duvenchy.onrender.com"}, // Update with your production frontend URL
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+	})
+
 	// Start server
-	log.Println("Server running at :8080")
-	http.ListenAndServe(":8080", c.Handler(r))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default to 8080 if no PORT is specified
+	}
+	log.Printf("Server running at :%s", port)
+	http.ListenAndServe(":"+port, c.Handler(r))
 }

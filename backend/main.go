@@ -54,7 +54,7 @@ var products = []Product{
 	{
 		Name:        "Cool Shirt",
 		Description: "This is a stylish shirt made from high-quality fabric, perfect for casual outings.",
-		Price:       9.98,
+		Price:       19.99,
 		Images: map[string]string{
 			"black": "https://shop-duvenchy.onrender.com/clothing/shirts/black-shirt.png",
 			"white": "https://shop-duvenchy.onrender.com/clothing/shirts/white-shirt.png",
@@ -63,16 +63,16 @@ var products = []Product{
 		Sizes:  []string{"S", "M", "L", "XL"},
 		Colors: []string{"black", "white", "pink"},
 		Variations: []Variation{
-			{Color: "black", Size: "S", Stock: 10},
-			{Color: "black", Size: "M", Stock: 5},
-			{Color: "white", Size: "L", Stock: 8},
-			{Color: "pink", Size: "XL", Stock: 3},
+			{Color: "black", Size: "S", Stock: 0},
+			{Color: "black", Size: "M", Stock: 0},
+			{Color: "white", Size: "L", Stock: 0},
+			{Color: "pink", Size: "XL", Stock: 0},
 		},
 	},
 	{
 		Name:        "Stylish Hoodie",
 		Description: "Our comfortable hoodie keeps you warm during the colder months, while also looking great.",
-		Price:       99.00,
+		Price:       59.99,
 		Images: map[string]string{
 			"white": "https://shop-duvenchy.onrender.com/clothing/hoodies/white-hoodie.png",
 			"black": "https://shop-duvenchy.onrender.com/clothing/hoodies/black-hoodie.png",
@@ -81,10 +81,10 @@ var products = []Product{
 		Sizes:  []string{"S", "M", "L", "XL"},
 		Colors: []string{"white", "black", "blue"},
 		Variations: []Variation{
-			{Color: "white", Size: "S", Stock: 15},
-			{Color: "white", Size: "M", Stock: 10},
-			{Color: "black", Size: "L", Stock: 7},
-			{Color: "blue", Size: "XL", Stock: 4},
+			{Color: "white", Size: "S", Stock: 0},
+			{Color: "white", Size: "M", Stock: 0},
+			{Color: "black", Size: "L", Stock: 0},
+			{Color: "blue", Size: "XL", Stock: 0},
 		},
 	},
 }

@@ -4,7 +4,7 @@ import './Checkout.css'; // Ensure you have CSS for styling
 
 const Checkout = ({ cartItems, totalAmount }) => {
 
-    const apiBaseUrl = process.env.REACT_APP_BACKEND_URL;
+    //const apiBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
     const stripe = useStripe();
     const elements = useElements();
@@ -50,9 +50,9 @@ const Checkout = ({ cartItems, totalAmount }) => {
             setLoading(false);
             return;
         }
-
+        //(`${apiBaseUrl}/create-payment-intent`,
         // Create a payment intent with your server
-        const response = await fetch(`${apiBaseUrl}/create-payment-intent`, { // Change this to your backend URL
+        const response = await fetch(`https://shop-duvenchy.onrender.com/create-payment-intent`, { // Change this to your backend URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

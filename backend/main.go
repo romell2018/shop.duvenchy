@@ -163,24 +163,26 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 
-	// API Endpoints
+	// Serve API Endpoints
 	r.HandleFunc("/products", getProducts).Methods("GET")
 	r.HandleFunc("/create-payment-intent", createPaymentIntent).Methods("POST")
 	r.HandleFunc("/process-checkout", processCheckout).Methods("POST")
 
-	// Serve static files for React and clothing images
-	staticDir := "./build"
+	// Serve clothing images
 	r.PathPrefix("/clothing/").Handler(http.StripPrefix("/clothing/", http.FileServer(http.Dir("./clothing"))))
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir(staticDir)))
 
-	// Catch-all handler for React routes
+	// Serve React static files (after API routes)
+	staticDir := "./build"
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(staticDir))))
+
+	// Catch-all handler for React routes (client-side routing)
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, filepath.Join(staticDir, "index.html"))
 	})
 
 	// Enable CORS
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://shop-duvenchy.onrender.com"},
+		AllowedOrigins:   []string{"https://shop.duvenchy.com"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
